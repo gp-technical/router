@@ -202,12 +202,10 @@ http {
 		location ~ ^/stats/?$ {
 			vhost_traffic_status_display;
 			vhost_traffic_status_display_format json;
-			allow 127.0.0.1;
 			deny all;
 		}
 	 	location /nginx_status {
       			stub_status on;
-		      	allow 127.0.0.1;
 		      	deny all;
 		}
 		location / {
@@ -279,12 +277,16 @@ http {
 
 			proxy_pass http://{{$appConfig.ServiceIP}}:80;{{ else }}return 503;{{ end }}
 		}
-		{{ if $appConfig.Maintenance }}error_page 503 @maintenance;
-			location @maintenance {
-					root /;
-			    rewrite ^(.*)$ /www/maintenance.html break;
-			}
-		{{ end }}
+		error_page 503 @maintenance;
+		error_page 404 @notfound;
+		location @maintenance {
+				root /;
+		    rewrite ^(.*)$ /www/maintenance.html break;
+		}
+		location @notfound {
+				root /;
+		    rewrite ^(.*)$ /www/notfound.html break;
+		}
 	}
 
 	{{end}}{{end}}
