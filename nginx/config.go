@@ -160,6 +160,16 @@ http {
 			proxy_set_header Connection $connection_upgrade;
 			proxy_pass http://{{$routerConfig.DefaultServiceIP}}:80;
 		}
+		error_page 503 @maintenance;
+		error_page 404 @notfound;
+		location @maintenance {
+				root /;
+		    rewrite ^(.*)$ /www/maintenance.html break;
+		}
+		location @notfound {
+				root /;
+		    rewrite ^(.*)$ /www/notfound.html break;
+		}
 	}
 	{{ else }}
 
@@ -186,6 +196,16 @@ http {
 		location / {
 			return 404;
 		}
+		error_page 503 @maintenance;
+		error_page 404 @notfound;
+		location @maintenance {
+				root /;
+		    rewrite ^(.*)$ /www/maintenance.html break;
+		}
+		location @notfound {
+				root /;
+		    rewrite ^(.*)$ /www/notfound.html break;
+		}
 	}
 	{{ end }}
 
@@ -210,6 +230,16 @@ http {
 		}
 		location / {
 			return 404;
+		}
+		error_page 503 @maintenance;
+		error_page 404 @notfound;
+		location @maintenance {
+				root /;
+		    rewrite ^(.*)$ /www/maintenance.html break;
+		}
+		location @notfound {
+				root /;
+		    rewrite ^(.*)$ /www/notfound.html break;
 		}
 	}
 
