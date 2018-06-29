@@ -57,7 +57,7 @@ binary-build:
 	${UPX} ${BINDIR}/${SHORT_NAME}
 
 deploy: check-kubectl docker-build docker-push
-	kubectl --namespace=deis patch deployment deis-${SHORT_NAME} \
+	kubectl --namespace=workflow patch deployment deis-${SHORT_NAME} \
 		--type='json' \
 		-p='[ \
 			{"op": "replace", "path": "/spec/strategy", "value":{"type":"Recreate"}}, \
