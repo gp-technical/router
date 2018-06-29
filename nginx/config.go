@@ -161,6 +161,7 @@ http {
 			proxy_pass http://{{$routerConfig.DefaultServiceIP}}:80;
 		}
 		error_page 503 @maintenance;
+		error_page 504 @maintenance;
 		error_page 404 @notfound;
 		location @maintenance {
 				root /;
@@ -232,6 +233,7 @@ http {
 			return 404;
 		}
 		error_page 503 @maintenance;
+		error_page 504 @maintenance;
 		error_page 404 @notfound;
 		location @maintenance {
 				root /;
@@ -308,6 +310,7 @@ http {
 			proxy_pass http://{{$appConfig.ServiceIP}}:80;{{ else }}return 503;{{ end }}
 		}
 		error_page 503 @maintenance;
+		error_page 504 @maintenance;
 		error_page 404 @notfound;
 		location @maintenance {
 				root /;
