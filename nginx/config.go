@@ -160,6 +160,7 @@ http {
 			proxy_set_header Connection $connection_upgrade;
 			proxy_pass http://{{$routerConfig.DefaultServiceIP}}:80;
 		}
+		error_page 502 @maintenance;
 		error_page 503 @maintenance;
 		error_page 504 @maintenance;
 		error_page 404 @notfound;
@@ -197,7 +198,9 @@ http {
 		location / {
 			return 404;
 		}
+		error_page 502 @maintenance;
 		error_page 503 @maintenance;
+		error_page 504 @maintenance;
 		error_page 404 @notfound;
 		location @maintenance {
 				root /;
@@ -232,6 +235,7 @@ http {
 		location / {
 			return 404;
 		}
+		error_page 502 @maintenance;
 		error_page 503 @maintenance;
 		error_page 504 @maintenance;
 		error_page 404 @notfound;
@@ -309,6 +313,7 @@ http {
 
 			proxy_pass http://{{$appConfig.ServiceIP}}:80;{{ else }}return 503;{{ end }}
 		}
+		error_page 502 @maintenance;
 		error_page 503 @maintenance;
 		error_page 504 @maintenance;
 		error_page 404 @notfound;
